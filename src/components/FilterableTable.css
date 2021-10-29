@@ -1,0 +1,18 @@
+input {
+    height: calc(30px + 2vmin);
+    border-radius: calc(2px + 1vmin);
+    border-style: none;
+    font-size: calc(10px + 2vmin);
+    text-align: center;
+    width: 75vmin;
+}
+
+table {
+    background-color: white;
+    color: green;
+    width: calc(8px + 75vmin);
+    border-style: none;
+    border-bottom-left-radius: calc(2px + 1vmin);
+    border-bottom-right-radius: calc(2px + 1vmin);
+    margin: 1vmin;
+}

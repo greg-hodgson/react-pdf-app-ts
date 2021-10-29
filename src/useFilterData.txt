@@ -1,0 +1,18 @@
+// import { filter } from 'minimatch';
+// import { useState } from 'react';
+// import { Record } from './interfaces';
+
+// function useFilterData(arr: Record[], query: string) {
+    
+//     const [filterOut, setFilterOut] = useState<Record[]>([])
+    
+//     const fil = arr.filter((el) => {
+//         return el.fields["Name"].toLowerCase().includes(query)})
+
+//     setFilterOut(fil)
+
+//     console.log(filterOut)
+//     return filterOut
+// }
+
+// export default useFilterData
