@@ -1,17 +1,19 @@
-
 interface SearchBarProps {
-    onSearchChange: (input: string) => void
+  onSearchChange: (input: string) => void;
 }
 
 function SearchBar({ onSearchChange }: SearchBarProps) {
+  const handleOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    onSearchChange(event.target.value);
+  };
 
-    const handleOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        onSearchChange(event.target.value)
-    }
-
-    return (
-        <input onChange={handleOnChange} placeholder="Search something..." />
-    );
+  return (
+    <input
+      className="SearchBar-input"
+      onChange={handleOnChange}
+      placeholder="Search something..."
+    />
+  );
 }
 
-export default SearchBar
+export default SearchBar;

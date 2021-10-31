@@ -3,6 +3,8 @@ export interface Record {
     fields: {
         "Name": string,
         "Company concat": string,
+        "Contact Concat": string,
+        "Email Reference": string,
     };
     createdTime: string;
 }

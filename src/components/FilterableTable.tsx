@@ -1,27 +1,26 @@
-import './FilterableTable.css'
-import SearchBar from "./SearchBar"
+import "./FilterableTable.css";
+import SearchBar from "./SearchBar";
 import SearchResults from "./SearchResults";
 import { Record } from "../types/interfaces";
-import { useState } from 'react';
+import { useState } from "react";
 
 interface FilterableTableProps {
-    data: Record[]
+  data: Record[];
 }
 
 function FilterableTable({ data }: FilterableTableProps) {
+  const [filterQuery, setFilterQuery] = useState<string>("this won't show up");
 
-    const [filterQuery, setFilterQuery] = useState<string>('this won\'t show up')
+  const onSearchChange = (input: string) => {
+    setFilterQuery(input);
+  };
 
-    const onSearchChange = (input: string) => {
-        setFilterQuery(input)
-    }
-
-    return (
-        <>
-            <SearchBar onSearchChange={onSearchChange} />
-            <SearchResults query={filterQuery} data={data} />
-        </>
-    );
+  return (
+    <div className="FilterableTable-header">
+      <SearchBar onSearchChange={onSearchChange} />
+      <SearchResults query={filterQuery} data={data} />
+    </div>
+  );
 }
 
-export default FilterableTable
+export default FilterableTable;
