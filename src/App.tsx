@@ -13,6 +13,7 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
+        <div className="App-logo"></div>
         <FilterableTable data={data}/>
       </header>
     </div>

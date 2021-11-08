@@ -1,4 +1,5 @@
 import { Record } from "../types/interfaces";
+import replaceStringReact from "./replaceStringReact";
 import "./FilterableTable.css";
 
 interface SearchResultsProps {
@@ -8,28 +9,49 @@ interface SearchResultsProps {
 
 function SearchResults({ query, data }: SearchResultsProps) {
 
-    // const search = (list, searchPara)
-  const results = data.filter((record) =>
-    query
-      ? record.fields["Name"].toLowerCase().includes(query.toLowerCase()) ||
-        record.fields["Company concat"]
-          .toLowerCase()
-          .includes(query.toLowerCase()) ||
-        record.fields["Contact Concat"]
-          .toLowerCase()
-          .includes(query.toLowerCase()) 
-        // record.fields["Email Reference"]
-        //   .toLowerCase()
-        //   .includes(query.toLowerCase())
-      : false
-  );
+  let recordName: string;
+  let recordContact: string;
+  let recordEmail: string;
 
-  const listItems = results.map((record) => (
+  const isFiltered = (record: Record) => {
+    recordName = record.fields["Name"].toLowerCase();
+    recordContact = record.fields["Contact Concat"].toLowerCase();
+    recordEmail =
+      typeof record.fields["Email Reference"] === "string"
+        ? record.fields["Email Reference"].toLowerCase()
+        : "";
+
+    if (query) {
+      return (
+        recordName.includes(query.toLowerCase()) ||
+        recordContact.includes(query.toLowerCase()) ||
+        recordEmail.includes(query.toLowerCase())
+      );
+    }
+  };
+
+  const results = data.filter(isFiltered);
+
+  const listItems = results.map((record) => {
+
+    recordName = record.fields["Name"];
+    recordContact = record.fields["Contact Concat"];
+    recordEmail =
+      typeof record.fields["Email Reference"] === "string"
+        ? record.fields["Email Reference"]
+        : "";
+
+    return (
     <li className="SearchResults-li" key={record.id}>
-      <div>{record.fields["Name"]}</div>
-      <div className="SearchResults-li-div-mid">{record.fields["Company concat"]}</div>
+      <div>{replaceStringReact(recordName, query, "highlight")}</div>
+      <div className="SearchResults-li-div-mid">
+        {replaceStringReact(recordContact, query, "highlight")}
+      </div>
+      <div className="SearchResults-li-div-small">
+        {replaceStringReact(recordEmail, query, "highlight")}
+      </div>
     </li>
-  ));
+  )});
 
   return <ul className="SearchResults-ul">{listItems.slice(0, 10)}</ul>;
 }

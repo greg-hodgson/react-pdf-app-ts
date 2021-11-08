@@ -10,18 +10,16 @@
 }
 
 .FilterableTable-header {
-  position: absolute;
-  top: 250px;
   width: var(--search-width);
   padding: 0px;
   margin: 0px;
-  display: grid;
+  display: flex;
+  flex-direction: column;
 }
 
 .SearchBar-input {
-    width: auto;
-    border: 0px;
-    padding: 0px;
+  border: 0px;
+  padding: 0px;
   height: calc(30px + 2vmin);
   font-size: calc(10px + 2vmin);
   text-align: center;
@@ -35,6 +33,7 @@
   margin: 0;
   cursor: default;
   overflow: hidden;
+  position: relative;
 }
 
 .SearchResults-li {
@@ -45,7 +44,15 @@
   font-size: calc(5px + 2vmin);
 }
 
+.SearchResults-li-div-small {
+  font-size: calc(1px + 2vmin);
+}
+
 .SearchResults-li:hover {
   background-color: lightslategray;
   color: whitesmoke;
+}
+
+.highlight {
+  background-color: yellow;
 }
