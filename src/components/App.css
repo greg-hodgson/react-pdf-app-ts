@@ -1,3 +1,40 @@
+.App-header {
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+}
+
+.Search-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #282c34;
+  font-size: calc(10px + 2vmin);
+  color: white;
+  min-height: 100vh;
+  padding-left: 5vmin;
+  padding-right: 5vmin;
+  flex-grow: 1;
+}
+
+.Doc-wrapper {
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+}
+
+iframe {
+  height: 95vh;
+}
+
+.App-logo {
+  height: 250px;
+}
+
+.App-logo img {
+  width: 250px;
+}
+
 :root {
   --search-width: 65vw;
   --search-max-width: 65vw;
@@ -9,7 +46,7 @@
   }
 }
 
-.FilterableTable-header {
+.FilterableTable-wrapper {
   width: var(--search-width);
   padding: 0px;
   margin: 0px;
@@ -48,11 +85,12 @@
   font-size: calc(1px + 2vmin);
 }
 
-.SearchResults-li:hover {
+.Focus {
   background-color: lightslategray;
   color: whitesmoke;
 }
 
-.highlight {
-  background-color: yellow;
+.SearchResults-highlight {
+  background-color: #343d50;
+  color: white;
 }

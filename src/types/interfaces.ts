@@ -8,3 +8,8 @@ export interface Record {
     };
     createdTime: string;
 }
+
+export interface DocRecord {
+    showDoc: boolean,
+    record: Record | null,
+}
