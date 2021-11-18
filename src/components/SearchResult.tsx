@@ -1,13 +1,13 @@
 import replaceStringReact from "./replaceStringReact";
-import { SearchResultListProps } from "./SearchResultList";
-import { Record } from "../types/interfaces";
 
-interface SearchResultProps extends SearchResultListProps {
-  record: Record;
+import { LeadRecord } from "../types/interfaces";
+
+interface SearchResultProps {
+  record: LeadRecord;
   query: string;
   isFocus: boolean;
-  focusSearchResult: number;
-  searchResultClick: (record: Record) => void;
+  searchResultClick: (record: LeadRecord) => void;
+  searchResultMouseEnter: (record: LeadRecord) => void;
 }
 
 export default function SearchResult({
@@ -15,6 +15,7 @@ export default function SearchResult({
   query,
   isFocus,
   searchResultClick,
+  searchResultMouseEnter,
 }: SearchResultProps) {
   const recordName = record.fields["Name"];
   const recordContact = record.fields["Contact Concat"];
@@ -29,6 +30,7 @@ export default function SearchResult({
     <li
       className={`SearchResults-li ${liClass}`}
       onClick={() => searchResultClick(record)}
+      onMouseEnter={() => searchResultMouseEnter(record)}
     >
       <div>
         {replaceStringReact(recordName, query, "SearchResults-highlight")}

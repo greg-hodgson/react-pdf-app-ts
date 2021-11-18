@@ -1,65 +1,46 @@
-import { Record } from "../types/interfaces";
+import { LeadRecord } from "../types/interfaces";
 
 import SearchResult from "./SearchResult";
 
 export interface SearchResultListProps {
   query: string;
-  data?: Record[];
-  focusSearchResult: number;
-  searchResultClick: (record: Record) => void;
+  filteredLeadData: LeadRecord[] | null;
+  focusSearchResultIndex: number;
+  searchResultClick: (record: LeadRecord) => void;
+  searchResultMouseEnter: (record: LeadRecord) => void;
 }
 
 function SearchResults({
   query,
-  data,
-  focusSearchResult,
+  filteredLeadData,
+  focusSearchResultIndex,
   searchResultClick,
+  searchResultMouseEnter,
 }: SearchResultListProps) {
-  let recordName: string;
-  let recordContact: string;
-  let recordEmail: string;
-
-  const isFiltered = (record: Record) => {
-    recordName = record.fields["Name"].toLowerCase();
-    recordContact = record.fields["Contact Concat"].toLowerCase();
-    recordEmail =
-      typeof record.fields["Email Reference"] === "string"
-        ? record.fields["Email Reference"].toLowerCase()
-        : "";
-
-    if (query) {
-      return (
-        recordName.includes(query.toLowerCase()) ||
-        recordContact.includes(query.toLowerCase()) ||
-        recordEmail.includes(query.toLowerCase())
-      );
-    }
-  };
-
-  const results = data ? data.filter(isFiltered) : [];
-
   let isFocus: boolean;
 
-  const listItems = results.map((record, index) => {
-    if (focusSearchResult === index) {
-      isFocus = true
-    } else {
-      isFocus = false
-    }
-    
-    return (
-      <SearchResult
-        key={record.id}
-        record={record}
-        query={query}
-        isFocus={isFocus}
-        focusSearchResult={focusSearchResult}
-        searchResultClick={searchResultClick}
-      />
-    );
-  });
+  const resultList = filteredLeadData
+    ? filteredLeadData.slice(0, 10).map((record, index) => {
+        if (focusSearchResultIndex === index) {
+          isFocus = true;
+        } else {
+          isFocus = false;
+        }
 
-  return <ul className="SearchResults-ul">{listItems.slice(0, 10)}</ul>;
+        return (
+          <SearchResult
+            key={record.id}
+            record={record}
+            query={query}
+            isFocus={isFocus}
+            searchResultClick={searchResultClick}
+            searchResultMouseEnter={searchResultMouseEnter}
+          />
+        );
+      })
+    : [];
+
+  return <ul className="SearchResults-ul">{resultList}</ul>;
 }
 
 export default SearchResults;

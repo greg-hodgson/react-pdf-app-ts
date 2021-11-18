@@ -6,12 +6,12 @@ import {
   Document,
   StyleSheet,
 } from "@react-pdf/renderer";
-import { Record } from "../types/interfaces";
+import { LeadRecord } from "../types/interfaces";
 
 import logo from "../media/Powerflo Logo.png";
 
 type DocumentProps = {
-  record?: Record | null;
+  record: LeadRecord;
 };
 
 // Create styles
@@ -23,31 +23,42 @@ const styles = StyleSheet.create({
   },
   logo: {
     height: "auto",
-    width: 84,
+    width: 100,
     marginRight: "auto",
     marginLeft: "auto",
+    marginBottom: 20,
   },
   title: {
-    fontSize: 24,
-    textAlign: "center",
-    alignItems: "center",
+    fontSize: 20,
   },
-  body: {
-  },
+  body: {},
   infoContainer: {
     flexDirection: "row",
+    wordWrap: "break-word",
   },
-  infoColumn: {
+  infoColumnLeft: {
     fontSize: 11,
     flexDirection: "column",
+    maxWidth: "50%",
+    padding: 5,
+  },
+  infoColumnRight: {
+    fontSize: 11,
+    flexDirection: "column",
+    padding: 5,
+    marginLeft: "auto",
   },
   section: {
     margin: 10,
     padding: 10,
     flexGrow: 1,
   },
-
+  paddedText: {
+    marginBottom: "5px"
+  }
 });
+
+const quoteDate = new Date(Date.now());
 
 // Create Document Component
 const TestDocument = ({ record }: DocumentProps) => {
@@ -55,14 +66,20 @@ const TestDocument = ({ record }: DocumentProps) => {
     <Document>
       <Page size="A4" style={styles.page}>
         <Image src={logo} style={styles.logo} />
-        <Text></Text>
-        <View style={styles.body}>
-          <View style={styles.infoContainer}>
-            <View style={styles.infoColumn}>
-              <Text>Reference: {record ? record.fields["Name"] : null}</Text>
-              <Text>To: {record ? record.fields["Contact Concat"] : null}</Text>
-              <Text>From: Greg Hodgson</Text>
-            </View>
+
+
+        <View style={styles.infoContainer}>
+          <View style={styles.infoColumnRight}>
+            <Text style={styles.title}>QUOTE</Text>
+            <Text>Reference: {record?.fields["Name"]} </Text>
+            <Text>Date: {quoteDate.toLocaleDateString()} </Text>
+          </View>
+        </View>
+        <View style={styles.infoContainer}>
+          <View style={styles.infoColumnLeft}>
+            <Text style={styles.paddedText}>Client Reference: {record.fields["Email Reference"]}</Text>
+            <Text style={styles.paddedText}>To: {record.fields["Contact Concat"]}</Text>
+            <Text style={styles.paddedText}>Address: {record.fields["Company Address"]?.[0]}</Text>
           </View>
         </View>
         <View style={styles.section}>

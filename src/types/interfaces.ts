@@ -1,15 +1,21 @@
-export interface Record {
+export interface LeadRecord {
     id: string;
     fields: {
         "Name": string,
-        "Company concat": string,
         "Contact Concat": string,
         "Email Reference": string,
+        "Company concat": string,
+        "Company Address": string[],
+        "Created": string,
     };
     createdTime: string;
 }
 
-export interface DocRecord {
-    showDoc: boolean,
-    record: Record | null,
+export interface LineItemRecord {
+    id: string;
+    fields: {
+        "Name": string,
+        "Lead": string[]
+    };
+    createdTime: string;
 }
