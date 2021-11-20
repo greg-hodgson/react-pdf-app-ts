@@ -4,7 +4,7 @@ import { PDFViewer } from "@react-pdf/renderer";
 import { useGetAirtableData } from "../customHooks/useGetAirtableData";
 import { useFilter } from "../customHooks/useFilter";
 //typing
-import { LeadRecord, LineItemRecord } from "../types/interfaces";
+import { LeadRecord } from "../types/interfaces";
 //styling
 import "./App.css";
 //components
