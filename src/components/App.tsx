@@ -49,11 +49,11 @@ function App() {
 
   const focusSearchResultRecord = filteredLeadData[focusSearchResultIndex];
 
-  const filteredLineItemData: LineItemRecord[] = lineItemData.filter(
-    (record) => {
-      return record.fields["Lead"][0] === focusSearchResultRecord.id;
-    }
-  );
+  // const filteredLineItemData: LineItemRecord[] = lineItemData.filter(
+  //   (record) => {
+  //     return record.fields["Lead"][0] === focusSearchResultRecord.id;
+  //   }
+  // );
 
   const searchBarOnKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     switch (event.code) {
