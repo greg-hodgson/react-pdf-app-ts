@@ -24,8 +24,8 @@ function App() {
 
   const [leadData, isLoadingLeadData]: [LeadRecord[], boolean] =
     useGetAirtableData(reactAppBaseID, "Lead");
-  const [lineItemData, isLoadingLineItemData]: [LineItemRecord[], boolean] =
-    useGetAirtableData(reactAppBaseID, "Quote Line Items");
+  // const [lineItemData, isLoadingLineItemData]: [LineItemRecord[], boolean] =
+  //   useGetAirtableData(reactAppBaseID, "Quote Line Items");
   const [isDocVisible, setIsDocVisible] = useState(false);
   const [docRecord, setDocRecord] = useState<LeadRecord>({} as LeadRecord);
   const [filterQuery, setFilterQuery] = useState<string>("this won't show up");
@@ -97,7 +97,7 @@ function App() {
       <header className="App-header">
         <div className="Search-wrapper">
           <div className="App-logo"></div>
-          {isLoadingLeadData || isLoadingLineItemData ? (
+          {isLoadingLeadData ? (
             <div className="loading">Loading Data...</div>
           ) : (
             <FilterableTable>
