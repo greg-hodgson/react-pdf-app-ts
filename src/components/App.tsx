@@ -4,11 +4,11 @@ import { PDFViewer } from "@react-pdf/renderer";
 import { useGetAirtableData } from "../customHooks/useGetAirtableData";
 import { useFilter } from "../customHooks/useFilter";
 //typing
-import { LeadRecord } from "../types/interfaces";
+import { LeadRecord, LineItemRecord } from "../types/interfaces";
 //styling
 import "./App.css";
 //components
-import TestDocument from "./QuoteDocument";
+import QuoteDocument from "./pdf/QuoteDocument";
 import DocWrapper from "./DocWrapper";
 import FilterableTable from "./FilterableTable";
 import SearchBar from "./SearchBar";
@@ -24,12 +24,17 @@ function App() {
 
   const [leadData, isLoadingLeadData]: [LeadRecord[], boolean] =
     useGetAirtableData(reactAppBaseID, "Lead");
-  // const [lineItemData, isLoadingLineItemData]: [LineItemRecord[], boolean] =
-  //   useGetAirtableData(reactAppBaseID, "Quote Line Items");
+  const [lineItemData]: [LineItemRecord[], boolean] = useGetAirtableData(
+    reactAppBaseID,
+    "Quote Line Items"
+  );
   const [isDocVisible, setIsDocVisible] = useState(false);
   const [docRecord, setDocRecord] = useState<LeadRecord>({} as LeadRecord);
   const [filterQuery, setFilterQuery] = useState<string>("this won't show up");
   const [filteredLeadData] = useFilter(filterQuery, leadData);
+  const [filteredLineItemData, setFilteredLineItemData] = useState<
+    LineItemRecord[]
+  >([]);
   const [focusSearchResultIndex, setFocusSearchResultIndex] = useState(0);
 
   filteredLeadData.sort((a, b) => {
@@ -49,11 +54,13 @@ function App() {
 
   const focusSearchResultRecord = filteredLeadData[focusSearchResultIndex];
 
-  // const filteredLineItemData: LineItemRecord[] = lineItemData.filter(
-  //   (record) => {
-  //     return record.fields["Lead"][0] === focusSearchResultRecord.id;
-  //   }
-  // );
+  useEffect(() => {
+    setFilteredLineItemData(
+      lineItemData.filter((record) => {
+        return record.fields["Lead"]?.[0] === docRecord?.id;
+      })
+    );
+  }, [docRecord, lineItemData]);
 
   const searchBarOnKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     switch (event.code) {
@@ -116,14 +123,17 @@ function App() {
           )}
         </div>
 
-        {isDocVisible ? (
+        {isDocVisible && (
           <DocWrapper>
             <DocControl handleDocControlClick={handleDocControlClick} />
             <PDFViewer width="100%">
-              <TestDocument record={docRecord} />
+              <QuoteDocument
+                leadRecord={docRecord}
+                lineItems={filteredLineItemData}
+              />
             </PDFViewer>
           </DocWrapper>
-        ) : null}
+        )}
       </header>
     </div>
   );
